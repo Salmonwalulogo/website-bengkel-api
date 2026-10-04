@@ -12,14 +12,28 @@ class Transaction extends Model
 
     protected $fillable = [
         'user_id',
+        'customer_id',
         'invoice_number',
+        'checkout_token',
+        'subtotal',
+        'discount',
+        'tax',
+        'other_fee',
         'total_payment',
+        'paid_amount',
+        'change_amount',
         'status',
         'payment_method',
     ];
 
     protected $casts = [
         'total_payment' => 'decimal:2',
+        'subtotal' => 'decimal:2',
+        'discount' => 'decimal:2',
+        'tax' => 'decimal:2',
+        'other_fee' => 'decimal:2',
+        'paid_amount' => 'decimal:2',
+        'change_amount' => 'decimal:2',
     ];
 
     // Auto generate invoice number saat create
@@ -29,9 +43,23 @@ class Transaction extends Model
 
         static::creating(function ($transaction) {
             if (empty($transaction->invoice_number)) {
-                $transaction->invoice_number = 'INV-' . date('Ymd') . '-' . strtoupper(Str::random(6));
+                $transaction->invoice_number = 'TRX-' . now()->format('Ymd') . '-TMP-' . Str::uuid();
             }
         });
+
+        static::created(function ($transaction) {
+            $transaction->updateQuietly([
+                'invoice_number' => 'TRX-' . $transaction->created_at->format('Ymd') . '-' . str_pad((string) $transaction->id, 6, '0', STR_PAD_LEFT),
+            ]);
+        });
+    }
+
+    public static function nextInvoiceNumber(): string
+    {
+        $prefix = 'TRX-' . now()->format('Ymd') . '-';
+        $lastNumber = (int) static::max('id');
+
+        return $prefix . str_pad((string) ($lastNumber + 1), 3, '0', STR_PAD_LEFT);
     }
 
     // ============ RELASI ============
@@ -40,6 +68,11 @@ class Transaction extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function customer()
+    {
+        return $this->belongsTo(User::class, 'customer_id');
     }
 
     // Detail transaksi (produk yang dibeli)
@@ -81,8 +114,10 @@ class Transaction extends Model
         return match($this->payment_method) {
             'cash' => 'Tunai',
             'qris' => 'QRIS',
-                'ewallet' => 'E-Wallet',
-                'transfer' => 'Transfer Bank',
+            'debit' => 'Debit',
+            'kredit' => 'Kredit',
+            'ewallet' => 'E-Wallet',
+            'transfer' => 'Transfer',
             default => ucfirst($this->payment_method),
         };
     }

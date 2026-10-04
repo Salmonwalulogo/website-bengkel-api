@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\Rule;
 
 class TransactionController extends Controller
 {
@@ -30,9 +31,11 @@ class TransactionController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'user_id' => 'required|exists:users,id',
-                'payment_method' => 'required|in:cash,qris,ewallet,transfer',
-            'status' => 'required|in:pending,completed,cancelled',
+            'user_id' => [
+                'required',
+                Rule::exists('users', 'id')->where(fn ($query) => $query->where('role', 'customer')),
+            ],
+            'payment_method' => 'required|in:cash,qris,debit,kredit,ewallet,transfer',
             'products' => 'required|array|min:1',
             'products.*.product_id' => 'required|exists:products,id',
             'products.*.quantity' => 'required|integer|min:1',
@@ -45,7 +48,7 @@ class TransactionController extends Controller
             $details = [];
 
             foreach ($validated['products'] as $item) {
-                $product = Product::findOrFail($item['product_id']);
+                $product = Product::lockForUpdate()->findOrFail($item['product_id']);
                 
                 if ($product->stok < $item['quantity']) {
                     throw new \Exception("Stok {$product->name} tidak mencukupi");
@@ -61,7 +64,6 @@ class TransactionController extends Controller
                     'subtotal' => $subtotal,
                 ];
 
-                // Kurangi stok
                 $product->decrement('stok', $item['quantity']);
             }
 
@@ -70,7 +72,7 @@ class TransactionController extends Controller
                 'user_id' => $validated['user_id'],
                 'total_payment' => $totalPayment,
                 'payment_method' => $validated['payment_method'],
-                'status' => $validated['status'],
+                'status' => 'pending',
             ]);
 
             // Simpan detail transaksi

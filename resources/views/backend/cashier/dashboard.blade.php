@@ -69,7 +69,7 @@
 
     <div class="quick-actions mb-4">
         <a href="{{ route('kasir.orders') }}"><i class="fas fa-shopping-bag"></i><span>Kelola Pesanan</span><small>Periksa booking masuk</small></a>
-        <a href="{{ route('kasir.payments') }}"><i class="fas fa-wallet"></i><span>Catat Pembayaran</span><small>Update status bayar</small></a>
+        <a href="{{ route('kasir.pos') }}"><i class="fas fa-cash-register"></i><span>Transaksi Kasir</span><small>Buka halaman POS</small></a>
         <a href="{{ route('kasir.invoices') }}"><i class="fas fa-file-invoice"></i><span>Lihat Invoice</span><small>Cetak bukti transaksi</small></a>
     </div>
 </div>

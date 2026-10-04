@@ -1,0 +1,10 @@
+[
+    {
+        "merged": "com.bengkel.app-release-58:/drawable_ic_launcher_background.xml.flat",
+        "source": "com.bengkel.app-main-59:/drawable/ic_launcher_background.xml"
+    },
+    {
+        "merged": "com.bengkel.app-release-58:/drawable_ic_launcher_foreground.xml.flat",
+        "source": "com.bengkel.app-main-59:/drawable/ic_launcher_foreground.xml"
+    }
+]

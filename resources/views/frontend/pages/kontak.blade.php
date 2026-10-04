@@ -6,7 +6,9 @@
     <title>Kontak - Rumah Daun Bengkel Otomotif</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+    @vite('resources/css/frontend/frontend.css')
     @vite('resources/css/frontend/kontak.css')
+    @vite('resources/js/frontend.js')
 </head>
 <body>
     <!-- Navbar -->
@@ -19,6 +21,9 @@
                     <div class="contact-brand-subtitle">BENGKEL OTOMOTIF</div>
                 </div>
             </a>
+            <button class="nav-toggle" type="button" aria-label="Buka menu navigasi" aria-expanded="false">
+                <i class="bi bi-list"></i>
+            </button>
             <div class="nav-links">
                 <a href="{{ route('home') }}">Beranda</a>
                 <a href="{{ route('layanan') }}">Layanan</a>

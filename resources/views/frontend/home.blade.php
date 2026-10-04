@@ -19,6 +19,7 @@
 
     
     @vite('resources/css/frontend/home.css')
+    @vite('resources/js/frontend.js')
 </head>
 <body class="frontend-page">
     <!-- Navbar -->
@@ -31,7 +32,7 @@
                     <span>BENGKEL OTOMOTIF</span>
                 </div>
             </a>
-            <button class="nav-toggle" type="button" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Buka menu navigasi">
+            <button class="nav-toggle" type="button" aria-label="Buka menu navigasi" aria-expanded="false">
                 <i class="bi bi-list"></i>
             </button>
             <div class="nav-links">
@@ -173,8 +174,8 @@
         <div class="container">
             <div class="about-content">
                 <div class="about-image" data-aos="fade-right">
-                    <div  class="page-style-2">
-                        <i class="bi bi-motorcycle page-style-3" ></i>
+                    <div class="about-illustration">
+                        <i class="bi bi-motorcycle about-illustration-icon"></i>
                     </div>
                 </div>
                 <div class="about-text" data-aos="fade-left">
@@ -196,28 +197,28 @@
                             <i class="bi bi-check-circle-fill"></i>
                             <div>
                                 <strong>Garansi Servis</strong>
-                                <p  class="page-style-4">Setiap layanan bergaransi</p>
+                                <p class="about-feature-note">Setiap layanan bergaransi</p>
                             </div>
                         </div>
                         <div class="about-feature-item">
                             <i class="bi bi-check-circle-fill"></i>
                             <div>
                                 <strong>Teknisi Bersertifikat</strong>
-                                <p  class="page-style-5">Tim profesional berpengalaman</p>
+                                <p class="about-feature-note">Tim profesional berpengalaman</p>
                             </div>
                         </div>
                         <div class="about-feature-item">
                             <i class="bi bi-check-circle-fill"></i>
                             <div>
                                 <strong>Harga Transparan</strong>
-                                <p  class="page-style-6">Tanpa biaya tersembunyi</p>
+                                <p class="about-feature-note">Tanpa biaya tersembunyi</p>
                             </div>
                         </div>
                         <div class="about-feature-item">
                             <i class="bi bi-check-circle-fill"></i>
                             <div>
                                 <strong>Pengerjaan Cepat</strong>
-                                <p  class="page-style-7">Tepat waktu dan berkualitas</p>
+                                <p class="about-feature-note">Tepat waktu dan berkualitas</p>
                             </div>
                         </div>
                     </div>
@@ -230,10 +231,10 @@
     <section class="testimonials">
         <div class="container">
             <div class="section-header" data-aos="fade-up">
-                <span class="section-tag page-style-8" >
+                <span class="section-tag testimonial-tag">
                     <i class="bi bi-chat-quote"></i> Testimoni
                 </span>
-                <h2>Apa Kata <span  class="page-style-9">Pelanggan Kami</span></h2>
+                <h2>Apa Kata <span class="testimonial-highlight">Pelanggan Kami</span></h2>
                 <p>Kepercayaan pelanggan adalah prioritas utama kami</p>
             </div>
             <div class="testimonials-grid">
@@ -371,7 +372,7 @@
                 </div>
                 <div class="footer-bottom">
                     <p>&copy; {{ date('Y') }} Rumah Daun Bengkel Otomotif. All rights reserved.</p>
-                    <p  class="page-style-10">
+                    <p class="contact-note">
                         <i class="bi bi-geo-alt me-2"></i>Desa Menia, Kecamatan Sabu Barat, Sabu Raijua
                         <span class="mx-3">|</span>
                         <i class="bi bi-telephone me-2"></i>0821-2462-6248

@@ -19,7 +19,7 @@
     @vite('resources/css/backend/cashier.css')
 </head>
 <body class="backend-page">
-    <div class="sidebar">
+    <div class="sidebar" id="cashier-sidebar">
         <div class="sidebar-brand">
             <i class="fas fa-cash-register me-2"></i> KASIR
         </div>
@@ -32,6 +32,11 @@
             <li class="nav-item">
                 <a href="{{ route('kasir.orders') }}" class="nav-link {{ request()->routeIs('kasir.orders') ? 'active' : '' }}">
                     <i class="fas fa-shopping-bag"></i><span>Pesanan</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="{{ route('kasir.pos') }}" class="nav-link {{ request()->routeIs('kasir.pos*') ? 'active' : '' }}">
+                    <i class="fas fa-cash-register"></i><span>Transaksi Kasir</span>
                 </a>
             </li>
             <li class="nav-item">
@@ -59,9 +64,20 @@
             </li>
         </ul>
     </div>
+    <button type="button" class="sidebar-backdrop" aria-label="Tutup menu kasir" onclick="toggleCashierSidebar(false)"></button>
 
     <div class="content-wrapper">
         <div class="topbar">
+            <button
+                type="button"
+                class="mobile-menu-toggle"
+                aria-label="Buka menu kasir"
+                aria-controls="cashier-sidebar"
+                aria-expanded="false"
+                onclick="toggleCashierSidebar()"
+            >
+                <i class="fas fa-bars"></i>
+            </button>
             <div class="topbar-title"><i class="fas fa-store me-2 text-warning"></i>@yield('page-title', 'Dashboard Kasir')</div>
             <div class="ms-auto d-flex align-items-center">
                 <div class="user-pill">
@@ -85,6 +101,26 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function toggleCashierSidebar(open = null) {
+            const sidebar = document.getElementById('cashier-sidebar');
+            const backdrop = document.querySelector('.sidebar-backdrop');
+            const toggle = document.querySelector('.mobile-menu-toggle');
+            const shouldOpen = open === null
+                ? !sidebar.classList.contains('open')
+                : open;
+
+            sidebar.classList.toggle('open', shouldOpen);
+            backdrop.classList.toggle('show', shouldOpen);
+            toggle.setAttribute('aria-expanded', String(shouldOpen));
+        }
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape') {
+                toggleCashierSidebar(false);
+            }
+        });
+    </script>
     @stack('scripts')
 </body>
 </html>

@@ -167,6 +167,8 @@ Route::middleware(['auth', 'role:kasir'])->prefix('kasir')->name('kasir.')->grou
     Route::get('/pesanan', [CashierDashboardController::class, 'orders'])->name('orders');
     Route::get('/pembayaran', [CashierDashboardController::class, 'payments'])->name('payments');
     Route::get('/invoice', [CashierDashboardController::class, 'invoices'])->name('invoices');
+    Route::get('/transaksi', [CashierDashboardController::class, 'pos'])->name('pos');
+    Route::post('/transaksi', [CashierDashboardController::class, 'storeTransaction'])->name('pos.store');
 });
 
 
